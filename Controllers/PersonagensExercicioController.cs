@@ -97,22 +97,26 @@ namespace RpgApi.Controllers
             return Ok(mensagem);
         }
 
-        [HttpGet("GetByClasse")]
-
-        public IActionResult GetByClasse(int classe)
+        [HttpGet("GetbyClasse/{classe}")]
+        public IActionResult GetbyClasse(int classe)
         {
-            
-            List<Personagem> listaBusca = personagens.FindAll(p => p.Classe == classe);
-            
+            if (!Enum.IsDefined(typeof(ClasseEnum), classe))
+            {
+                return BadRequest("ID de classe inválido");
+            }
+
+            ClasseEnum classeSelecionada = (ClasseEnum)classe;
+
+            List<Personagem> listaBusca = personagens.FindAll(p => p.Classe == classeSelecionada);
+
             if (listaBusca.Count > 0)
             {
-                return Ok(listaBusca); 
+                return Ok(listaBusca);
             }
             else
             {
-                return NotFound("Nao foi encontrado");
+                return NotFound("Nenhum personagem encontrado para a classe informada.");
             }
-            
         }
 
 
