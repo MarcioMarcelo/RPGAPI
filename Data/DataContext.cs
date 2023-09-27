@@ -18,6 +18,8 @@ namespace RpgApi.Data
         public DbSet<Personagem> TB_PERSONAGENS{ get ; set; }
         public DbSet<Armas> TB_ARMAS{ get ; set; }
         public DbSet<Usuario> TB_USUARIOS { get; set; }
+        public DbSet<Habilidade> TB_HABILIDADE { get; set; }
+        public DbSet<PersonagemHabilidade> TB_PERSONAGEMHABILIDADE { get; set; }
 
             //Prop + TAB Criar propriedades
             //Ctor + TAB Criar construtor
@@ -70,6 +72,14 @@ namespace RpgApi.Data
             //Define que se o Perfil não for informado, o valor padrao será jogador
             modelBuilder.Entity<Usuario>().Property(u => u.Perfil).HasDefaultValue("Jogador");
             
+            modelBuilder.Entity<PersonagemHabilidade>()
+                .HasKey(PersonagemHabilidade => new {ph.PersonagemId, ph.HabilidadeId});
+            
+            modelBuilder.Entity<Habilidade>().HasData
+            (
+                new Habilidade(){Id=1, Nome="Adormecer", Dano=39},
+                new Habilidade(){Id=2, Nome="Congelar", Dano=39},
+            )
 
         }
         
