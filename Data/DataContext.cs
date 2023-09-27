@@ -1,6 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using RpgApi.Models;
 using RpgApi.Models.Enuns;
+using RpgApi.utils;
+using System.Linq;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace RpgApi.Data
 {
@@ -13,8 +17,8 @@ namespace RpgApi.Data
             
         public DbSet<Personagem> TB_PERSONAGENS{ get ; set; }
         public DbSet<Armas> TB_ARMAS{ get ; set; }
+        public DbSet<Usuario> TB_USUARIOS { get; set; }
 
-    
             //Prop + TAB Criar propriedades
             //Ctor + TAB Criar construtor
             
@@ -36,28 +40,41 @@ namespace RpgApi.Data
 
             modelBuilder.Entity<Armas>().HasData
             (
-                new Armas() { Id = 1, Nome = "Espada", Dano = 10},
-                new Armas() { Id = 2, Nome = "Machado", Dano = 20},
-                new Armas() { Id = 3, Nome = "Arco", Dano = 7},
-                new Armas() { Id = 4, Nome = "Maca", Dano = 15},
-                new Armas() { Id = 5, Nome = "Bordao", Dano = 10},
-                new Armas() { Id = 6, Nome = "Manopla", Dano = 4},
-                new Armas() { Id = 7, Nome = "Chicote", Dano = 6}
+                new Armas() { Id = 1, Nome = "Espada", Dano = 10, PersonagemId = 1},
+                new Armas() { Id = 2, Nome = "Machado", Dano = 20, PersonagemId = 2},
+                new Armas() { Id = 3, Nome = "Arco", Dano = 7, PersonagemId = 3},
+                new Armas() { Id = 4, Nome = "Maca", Dano = 15, PersonagemId = 4},
+                new Armas() { Id = 5, Nome = "Bordao", Dano = 10, PersonagemId = 5},
+                new Armas() { Id = 6, Nome = "Manopla", Dano = 4, PersonagemId = 6},
+                new Armas() { Id = 7, Nome = "Chicote", Dano = 6, PersonagemId = 7}
                 
                 //área para futuros inserts no banco
-
             );
+
+              //Início da criação do usuário padrão.
+            Usuario user = new Usuario();
+            Criptografia.CriarPasswordHash("123456", out byte[] hash, out byte[]salt);
+            user.Id = 1;
+            user.Username = "UsuarioAdmin";
+            user.PasswordString = string.Empty;
+            user.PasswordHash = hash;
+            user.PasswordSalt = salt;
+            user.Perfil = "Admin";
+            user.Email = "seuEmail@gmail.com";
+            user.Latitude = -23.5200241;
+            user.Longitude = -46.596498;
+
+            modelBuilder.Entity<Usuario>().HasData(user);            
+            //Fim da criação do usuário padrão.
+
+            //Define que se o Perfil não for informado, o valor padrao será jogador
+            modelBuilder.Entity<Usuario>().Property(u => u.Perfil).HasDefaultValue("Jogador");
+            
+
         }
-
-
-          
-    
-
-
+        
 
     }
-    
-    
     
     }
     
