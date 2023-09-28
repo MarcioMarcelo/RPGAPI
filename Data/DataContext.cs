@@ -6,6 +6,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
+
 namespace RpgApi.Data
 {
     public class DataContext : DbContext
@@ -73,13 +74,28 @@ namespace RpgApi.Data
             modelBuilder.Entity<Usuario>().Property(u => u.Perfil).HasDefaultValue("Jogador");
             
             modelBuilder.Entity<PersonagemHabilidade>()
-                .HasKey(PersonagemHabilidade => new {ph.PersonagemId, ph.HabilidadeId});
+                .HasKey(ph => new {ph.PersonagemId, ph.HabilidadeId});
             
             modelBuilder.Entity<Habilidade>().HasData
             (
                 new Habilidade(){Id=1, Nome="Adormecer", Dano=39},
                 new Habilidade(){Id=2, Nome="Congelar", Dano=39},
-            )
+                new Habilidade(){Id=3, Nome="Hipnotizar", Dano=37}
+            );
+
+            modelBuilder.Entity<PersonagemHabilidade>().HasData
+            (
+                new PersonagemHabilidade() {PersonagemId = 1, HabilidadeId = 1},
+                new PersonagemHabilidade() {PersonagemId = 1, HabilidadeId = 2},
+                new PersonagemHabilidade() {PersonagemId = 2, HabilidadeId = 2},
+                new PersonagemHabilidade() {PersonagemId = 3, HabilidadeId = 2},
+                new PersonagemHabilidade() {PersonagemId = 3, HabilidadeId = 3},
+                new PersonagemHabilidade() {PersonagemId = 4, HabilidadeId = 3},
+                new PersonagemHabilidade() {PersonagemId = 5, HabilidadeId = 1},
+                new PersonagemHabilidade() {PersonagemId = 6, HabilidadeId = 2},
+                new PersonagemHabilidade() {PersonagemId = 7, HabilidadeId = 3}
+
+            );
 
         }
         
