@@ -18,9 +18,9 @@ namespace RpgApi.Models
         public Usuario? Usuario { get; set; }
 
         [JsonIgnore]
-        public Arma Arma { get; set; }
+        public Arma? Arma { get; set; }
 
-        public List<PersonagemHabilidade> PersonagemHabilidades { get; set; }
+        public List<PersonagemHabilidade>? PersonagemHabilidades { get; set; }
 
         public int Disputas { get; set; }  
         public int Vitorias { get; set; }  

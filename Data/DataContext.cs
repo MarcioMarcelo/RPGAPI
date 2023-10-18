@@ -16,11 +16,13 @@ namespace RpgApi.Data
 
         }
 
+        public DbSet<Disputa> TB_DISPUTAS { get; set; }
         public DbSet<Personagem> TB_PERSONAGENS { get; set; }
         public DbSet<Arma> TB_ARMAS { get; set; }
         public DbSet<Usuario> TB_USUARIOS { get; set; }
         public DbSet<Habilidade> TB_HABILIDADES { get; set; }
         public DbSet<PersonagemHabilidade> TB_PERSONAGENS_HABILIDADES { get; set; }
+        
 
         
 
