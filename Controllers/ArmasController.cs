@@ -48,27 +48,8 @@ namespace RpgApi.Controllers
             }
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Add(Arma novaArma)
-        {
-            try
-            {
-                Personagem p = await _context.TB_PERSONAGENS
-                    .FirstOrDefaultAsync(p => p.Id == novaArma.PersonagemId);
+        
 
-                if (p == null)
-                    throw new Exception("Não existe Pesonagem com o Id informado");
-
-                await _context.TB_ARMAS.AddAsync(novaArma);
-                await _context.SaveChangesAsync();
-
-                return Ok(novaArma.Id);
-            }
-            catch (System.Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
 
         [HttpPut]
         public async Task<IActionResult> Update(Arma novaArma)

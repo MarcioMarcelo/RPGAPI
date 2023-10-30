@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\2DS\\MARCELOMARCIO_2DS\\RPGAPI\\RpgApi.csproj": {}
+    "D:\\TecnicoDSII\\DS\\Atividade 12\\RPGAPI\\RpgApi.csproj": {}
   },
   "projects": {
-    "D:\\2DS\\MARCELOMARCIO_2DS\\RPGAPI\\RpgApi.csproj": {
+    "D:\\TecnicoDSII\\DS\\Atividade 12\\RPGAPI\\RpgApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\2DS\\MARCELOMARCIO_2DS\\RPGAPI\\RpgApi.csproj",
+        "projectUniqueName": "D:\\TecnicoDSII\\DS\\Atividade 12\\RPGAPI\\RpgApi.csproj",
         "projectName": "RpgApi",
-        "projectPath": "D:\\2DS\\MARCELOMARCIO_2DS\\RPGAPI\\RpgApi.csproj",
-        "packagesPath": "C:\\Users\\etechas\\.nuget\\packages\\",
-        "outputPath": "D:\\2DS\\MARCELOMARCIO_2DS\\RPGAPI\\obj\\",
+        "projectPath": "D:\\TecnicoDSII\\DS\\Atividade 12\\RPGAPI\\RpgApi.csproj",
+        "packagesPath": "C:\\Users\\marce\\.nuget\\packages\\",
+        "outputPath": "D:\\TecnicoDSII\\DS\\Atividade 12\\RPGAPI\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\etechas\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\marce\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -57,7 +57,7 @@
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[7.0.4, )"
+              "version": "[7.0.13, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
@@ -83,7 +83,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     }

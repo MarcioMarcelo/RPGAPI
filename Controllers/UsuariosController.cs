@@ -126,6 +126,141 @@ namespace RpgApi.Controllers
             }
         }
 
+        [HttpGet("{usuarioId}")]
+        public async Task<IActionResult> GetUsuario(int usuarioId)
+        {
+            try
+            {
+                Usuario usuario = await _context.TB_USUARIOS
+                    .FirstOrDefaultAsync(x => x.Id == usuarioId);
+                
+                return Ok(usuario);
+            }
+            catch(System.Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("GetByLogin/{login}")]
+        public async Task<IActionResult> GetUsuario(string login)
+        {
+            try
+            {
+                Usuario usuario = await _context.TB_USUARIOS
+                    .FirstOrDefaultAsync(x => x.Username.ToLower() == login.ToLower());
+                
+                return Ok(usuario);
+            }
+            catch(System.Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPut("AtualizarLocalizacao")]
+        public async Task<IActionResult> AtualizarLocalizacao(Usuario u)
+        {
+            try 
+            {
+                Usuario usuario = await _context.TB_USUARIOS
+                    .FirstOrDefaultAsync(x => x.Id == u.Id);
+                
+                usuario.Latitude = u.Latitude;
+                usuario.Longitude = u.Longitude;
+
+                var attach = _context.Attach(usuario);
+                attach.Property(x => x.Id).IsModified = false;
+                attach.Property(x => x.Latitude).IsModified = true;
+                attach.Property(x => x.Longitude).IsModified = true;
+
+                int linhasAfetadas = await _context.SaveChangesAsync();
+                return Ok(linhasAfetadas);
+            }
+            catch(System.Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPut("AtualizarEmail")]
+        public async Task<IActionResult> AtualizarEmail(Usuario u)
+        {
+            try
+            {
+                Usuario usuario = await _context.TB_USUARIOS
+                    .FirstOrDefaultAsync(x => x.Id == u.Id);
+                
+                usuario.Email = u.Email;
+
+                var attach = _context.Attach(usuario);
+                attach.Property(x => x.Id).IsModified = false;
+                attach.Property(x => x.Email).IsModified = true;
+
+                int linhasAfetadas = await _context.SaveChangesAsync();
+                return Ok(linhasAfetadas);
+            }
+            catch(System.Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPut("AtualizarFoto")]
+        public async Task<IActionResult> AtualizarFoto(Usuario u)
+        {
+            try
+            {
+                Usuario usuario = await _context.TB_USUARIOS
+                    .FirstOrDefaultAsync(x => x.Id == u.Id);
+                
+                usuario.Foto = u.Foto;
+
+                var attach = _context.Attach(usuario);
+                attach.Property(x => x.Id).IsModified = false;
+                attach.Property(x => x.Foto).IsModified = true;
+
+                int linhasAfetadas = await _context.SaveChangesAsync();
+                return Ok(linhasAfetadas);
+            }
+            catch(System.Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Add(Arma novaArma)
+        {
+            try
+            {
+                if (novaArma.Dano == 0)
+                    throw new SystemException("O dano da arma não pode ser 0.");
+
+
+                Personagem personagem = await _context.TB_PERSONAGENS
+                    .FirstOrDefaultAsync(p => p.Id == novaArma.PersonagemId);
+
+                if (personagem == null)
+                    throw new Exception("Seu usuário não contém personagens com o Id do Personagem informado.");
+
+                Arma buscaArma = await _context.TB_ARMAS
+                    .FirstOrDefaultAsync(a => a.Id == novaArma.PersonagemId);
+                
+                if(buscaArma != null)
+                    throw new System.Exception("O Personagem selecionado já contem uma arma atribuída a ele.");
+             
+                await _context.TB_ARMAS.AddAsync(novaArma);
+                await _context.SaveChangesAsync();
+
+                return Ok(novaArma.Id);
+            }
+            catch (System.Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
 
 
 
