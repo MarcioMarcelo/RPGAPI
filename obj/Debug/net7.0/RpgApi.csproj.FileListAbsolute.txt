@@ -620,8 +620,3 @@ D:\TecnicoDSII\DS\Atividade 12\RPGAPI\bin\Debug\net7.0\publish\appsettings.Devel
 D:\TecnicoDSII\DS\Atividade 12\RPGAPI\bin\Debug\net7.0\publish\appsettings.json
 D:\TecnicoDSII\DS\Atividade 12\RPGAPI\bin\Debug\net7.0\publish\RpgApi.deps.json
 D:\TecnicoDSII\DS\Atividade 12\RPGAPI\bin\Debug\net7.0\publish\RpgApi.runtimeconfig.json
-D:\TecnicoDSII\DS\Atividade 12\RPGAPI\bin\Debug\net7.0\publish\publish\web.config
-D:\TecnicoDSII\DS\Atividade 12\RPGAPI\bin\Debug\net7.0\publish\publish\appsettings.Development.json
-D:\TecnicoDSII\DS\Atividade 12\RPGAPI\bin\Debug\net7.0\publish\publish\appsettings.json
-D:\TecnicoDSII\DS\Atividade 12\RPGAPI\bin\Debug\net7.0\publish\publish\RpgApi.deps.json
-D:\TecnicoDSII\DS\Atividade 12\RPGAPI\bin\Debug\net7.0\publish\publish\RpgApi.runtimeconfig.json

@@ -9,7 +9,7 @@ namespace RpgApi.Models
         [Key]
         [Column("Id")]
 
-        public int id {get; set;}
+        public int Id {get; set;}
 
         [Column ("Dt_Disputa")]
         public DateTime? DataDisputa {get; set;}

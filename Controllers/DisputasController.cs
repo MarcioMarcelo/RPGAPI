@@ -133,12 +133,12 @@ namespace RPGAPI.Controllers
                     .Include(p => p.Arma)
                     .Include(p => p.PersonagemHabilidades).ThenInclude(ph => ph.Habilidade)
                     .Where(p => d.ListaIdPersonagens.Contains(p.Id)).ToListAsync();
-
+                
                 int qtdPersonagensVivos = personagens.FindAll(p => p.PontosVida > 0).Count;
 
                 while(qtdPersonagensVivos > 1)
                 {
-                    List<Personagem> atacantes = personagens.Where(p => p.PontosVida > 0).ToList();
+                    List<Personagem> atacantes  = personagens.Where(p => p.PontosVida > 0).ToList();
                     Personagem atacante = atacantes[new Random().Next(atacantes.Count)];
                     d.AtacanteId = atacante.Id;
 
@@ -146,52 +146,52 @@ namespace RPGAPI.Controllers
                     Personagem oponente = oponentes[new Random().Next(oponentes.Count)];
                     d.OponenteId = oponente.Id;
 
-                    int dano = 0; 
+                    int dano = 0;
                     string ataqueUsado = string.Empty;
                     string resultado = string.Empty;
+                
+                    bool ataqueUsaArma = new Random().Next(1) == 0;
 
-                    bool ataqueUsaArma = (new Random().Next(1) == 0);
-
-                    if(ataqueUsaArma && atacante.Arma != null)
+                    if (ataqueUsaArma && atacante.Arma != null)
                     {
-                        dano = atacante.Arma.Dano + (new Random().Next(atacante.Forca));
-                        dano = dano - new Random().Next(oponente.Defesa);
+                        dano = atacante.Arma.Dano + new Random().Next(atacante.Forca);
+                        dano -= new Random().Next(oponente.Defesa);
                         ataqueUsado = atacante.Arma.Nome;
 
-                        if(dano > 0 )
-                            oponente.PontosVida = oponente.PontosVida = (int)dano;
+                        if(dano > 0)
+                            oponente.PontosVida = oponente.PontosVida - (int)dano;
 
                         resultado =
-                            string.Format("{0} atacou {1} usando {2} com o dano {3}.", atacante.Nome, oponente.Nome, ataqueUsado, dano);
+                            string.Format($"{atacante.Nome} atacou {oponente.Nome} usando {ataqueUsado} com um dano de {dano}. ");
                         d.Narracao += resultado;
                         d.Resultados.Add(resultado);
+
                     }
-                    else if (atacante.PersonagemHabilidades.Count != 0)
-                    {
+                    else if (atacante.PersonagemHabilidades.Count != 0){
                         int sorteioHabilidadeId = new Random().Next(atacante.PersonagemHabilidades.Count);
                         Habilidade habilidadeEscolhida = atacante.PersonagemHabilidades[sorteioHabilidadeId].Habilidade;
                         ataqueUsado = habilidadeEscolhida.Nome;
 
-                        dano = habilidadeEscolhida.Dano + (new Random().Next(atacante.Inteligencia));
-                        dano = dano - new Random().Next(oponente.Defesa);
+                        dano = habilidadeEscolhida.Dano + new Random().Next(atacante.Inteligencia);
+                        dano -= new Random().Next(oponente.Defesa);
 
-                        if (dano > 0)
-                            oponente.PontosVida =  oponente.PontosVida - (int)dano;
-                        
+                        if(dano > 0)
+                            oponente.PontosVida -=  (int)dano;
+
                         resultado =
-                            string.Format("{0} atacou {1} usando {2} com o dano {3}.", atacante.Nome, oponente.Nome, ataqueUsado, dano);
+                            string.Format($"{atacante.Nome} atacou {oponente.Nome} usando {ataqueUsado} com um dano de {dano}. ");
                         d.Narracao += resultado;
                         d.Resultados.Add(resultado);
                     }
 
-                    if (!string.IsNullOrEmpty(ataqueUsado))
+                    if(!string.IsNullOrEmpty(ataqueUsado))
                     {
-                        atacante.Vitorias++;
-                        oponente.Derrotas++;
-                        atacante.Disputas++;
-                        oponente.Disputas++;
+                        atacante.Vitorias ++;
+                        atacante.Disputas ++;
+                        oponente.Derrotas ++;
+                        oponente.Disputas ++;
 
-                        d.id = 0;
+                        d.Id = 0;
                         d.DataDisputa = DateTime.Now;
                         _context.TB_DISPUTAS.Add(d);
                         await _context.SaveChangesAsync();
@@ -199,24 +199,23 @@ namespace RPGAPI.Controllers
 
                     qtdPersonagensVivos = personagens.FindAll(p => p.PontosVida > 0).Count;
 
-                    if (qtdPersonagensVivos == 1)
+                    if(qtdPersonagensVivos == 1)
                     {
                         string resultadoFinal =
-                            $"{atacante.Nome.ToUpper()} é CAMPEÃO com {atacante.PontosVida} pontos de vida restantes!";
+                            $"{atacante.Nome.ToUpper()} é CAMPEÃO com {atacante.PontosVida} pontos de vida restantes";
+                        
                         d.Narracao += resultadoFinal;
                         d.Resultados.Add(resultadoFinal);
-
                         break;
                     }
                 }
-            
 
                 _context.TB_PERSONAGENS.UpdateRange(personagens);
                 await _context.SaveChangesAsync();
-            
+
                 return Ok(d);
             }
-            catch(System.Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
